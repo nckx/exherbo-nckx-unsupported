@@ -1,0 +1,78 @@
+--- a/shellinabox/styles.css	2014-03-12 12:28:57.401150151 +0100
++++ b/shellinabox/styles.css	2014-03-12 12:53:48.131134021 +0100
+@@ -115,7 +115,8 @@
+ }
+ 
+ #vt100 #menu .popup li.hover {
+-  background-color:     #444444;
++  background-color:     royalblue;
+   color:                white;
++  cursor:		default;
+ }
+ 
+@@ -150,22 +150,15 @@
+ 
+ #vt100 #keyboard .box {
+   font-family:          sans-serif;
+-  background-color:     #cccccc;
+-  padding:              .8em;
++  background-color:     black;
++  border:		4px solid white;
++  padding:              .4em;
+   float:                left;
+   position:             absolute;
+-  border-radius:        10px;
++  border-radius:        1em;
+-  -moz-border-radius:   10px;
+-  box-shadow:           4px 4px 6px #222222;
++  box-shadow:           0 0 3em black;
+-  -webkit-box-shadow:   4px 4px 6px #222222;
+-  /* Don't set the -moz-box-shadow. It doesn't properly scale when CSS
+-   * transforms are in effect. Once Firefox supports box-shadow, it should
+-   * automatically do the right thing. Until then, leave shadows disabled
+-   * for Firefox.
+-   */
+-  opacity:              0.85;
+-  -moz-opacity:         0.85;
+-  filter:               alpha(opacity=85);
++  opacity:              0.80;
++  filter:               alpha(opacity=80);
+ }
+ 
+ #vt100 #keyboard .box * {
+@@ -176,18 +167,16 @@
+ #vt100 #keyboard b, #vt100 #keyboard i, #vt100 #keyboard s, #vt100 #keyboard u {
+   font-style:           normal;
+   font-weight:          bold;
+-  border-radius:        5px;
++  border-radius:        .3em;
+-  -moz-border-radius:   5px;
+-  background-color:     #555555;
+-  color:                #eeeeee;
+-  box-shadow:           2px 2px 3px #222222;
+-  -webkit-box-shadow:   2px 2px 3px #222222;
++  background-color:     white;
++  color:                black;
+   padding:              4px;
+   margin:               2px;
+   height:               2ex;
+   display:              inline-block;
+   text-align:           center;
+   text-decoration:      none;
++  cursor:		default;
+ }
+ 
+ #vt100 #keyboard b, #vt100 #keyboard s {
+@@ -203,10 +191,8 @@
+ }
+ 
+ #vt100 #keyboard .selected {
+-  color:                #888888;
+-  background-color:     #eeeeee;
+-  box-shadow:           0px 0px 3px #222222;
+-  -webkit-box-shadow:   0px 0px 3px #222222;
++  color:                white;
++  background-color:     royalblue;
+   position:             relative;
+   top:                  1px;
+   left:                 1px;

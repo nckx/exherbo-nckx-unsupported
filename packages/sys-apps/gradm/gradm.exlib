@@ -1,0 +1,38 @@
+# Copyright 2014 Tobias Geerinckx-Rice (nckx) <tobias.geerinckx.rice@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+#BUGS_TO="https://github.com/nckx/exherbo-repository-nckx/issues"
+
+SUMMARY="Grsecurity Administration Utility"
+DESCRIPTION="
+Gradm, the administration utility for the Grsecurity role-based access control
+system, is a powerful tool that parses your ACLs (Access Control Lists),
+performs the enforcement of a secure base policy, optimizes the ACLs, as well
+as handles parsing of the learning logs, merges them with your ACL set and
+outputs the final ACLs.
+Before you install gradm, boot into your patched grsecurity kernel. You can
+compile gradm in any kernel you wish, but the installation will fail if the
+kernel does not support grsecurity.
+"
+HOMEPAGE="http://http://grsecurity.net/"
+UPSTREAM_DOCUMENTATION="
+    http://en.wikibooks.org/wiki/Grsecurity/The_Administration_Utility [[ description = [ Official Grsecurity Wikibook ] ]]
+"
+LICENCES="GPL-2"
+SLOT="0"
+
+DEPENDENCIES="
+    build:
+        sys-devel/bison
+        sys-devel/flex
+        sys-libs/pam
+"
+
+export_exlib_phases pkg_pretend
+
+gradm_pkg_pretend() {
+    if [[ ! -d /proc/sys/kernel/grsecurity/ ]]; then
+        die "${PN} can only be installed while running a Grsecurity kernel"
+    fi
+}
+

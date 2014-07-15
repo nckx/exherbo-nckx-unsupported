@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+# Redirect output to stderr.
+exec 1>&2
+
+(
+	cd packages
+	rmdir * 2>/dev/null || :
+	ls > ../metadata/categories.conf
+
+	{
+		echo '('
+		ls -d */*
+		echo ') [[ *token = unsupported *description = [ Entirely unsupported, probably for a reason ] ]]'
+	} > ../metadata/repository_mask.conf
+)
+
+find -name "*.ex*"  -type f -exec sed 's/^BUGS_TO=/#BUGS_TO=/g' -i {} \;

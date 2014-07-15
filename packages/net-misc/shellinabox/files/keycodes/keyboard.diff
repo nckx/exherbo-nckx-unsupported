@@ -1,0 +1,113 @@
+Index: shellinabox/shell_in_a_box.js
+===================================================================
+--- shellinabox/shell_in_a_box.js	(revision 239)
++++ shellinabox/shell_in_a_box.js	(working copy)
+@@ -267,16 +267,16 @@
+     } else if (c < 0x10000) {
+       s += 'E'                                 +
+            hex.charAt(       (c >> 12)       ) +
+-           hex.charAt(0x8 +  (c >> 10) & 0x3 ) +
++           hex.charAt(0x8 + ((c >> 10) & 0x3)) +
+            hex.charAt(       (c >>  6) & 0xF ) +
+            hex.charAt(0x8 + ((c >>  4) & 0x3)) +
+            hex.charAt(        c        & 0xF );
+     } else if (c < 0x110000) {
+       s += 'F'                                 +
+            hex.charAt(       (c >> 18)       ) +
+-           hex.charAt(0x8 +  (c >> 16) & 0x3 ) +
++           hex.charAt(0x8 + ((c >> 16) & 0x3)) +
+            hex.charAt(       (c >> 12) & 0xF ) +
+-           hex.charAt(0x8 +  (c >> 10) & 0x3 ) +
++           hex.charAt(0x8 + ((c >> 10) & 0x3)) +
+            hex.charAt(       (c >>  6) & 0xF ) +
+            hex.charAt(0x8 + ((c >>  4) & 0x3)) +
+            hex.charAt(        c        & 0xF );
+Index: shellinabox/vt100.jspp
+===================================================================
+--- shellinabox/vt100.jspp	(revision 239)
++++ shellinabox/vt100.jspp	(working copy)
+@@ -2711,10 +2711,14 @@
+       case 189: /* -            */ ch = this.applyModifiers(45, event); break;
+       case 190: /* .            */ ch = this.applyModifiers(46, event); break;
+       case 191: /* /            */ ch = this.applyModifiers(47, event); break;
+-      case 192: /* `            */ ch = this.applyModifiers(96, event); break;
+-      case 219: /* [            */ ch = this.applyModifiers(91, event); break;
++      // Conflicts with dead key " on Swiss keyboards
++      //case 192: /* `            */ ch = this.applyModifiers(96, event); break;
++      // Conflicts with dead key ' on Swiss keyboards
++      //case 219: /* [            */ ch = this.applyModifiers(91, event); break;
+       case 220: /* \            */ ch = this.applyModifiers(92, event); break;
+-      case 221: /* ]            */ ch = this.applyModifiers(93, event); break;
++      // Conflicts with dead key ^ and ` on Swiss keyboards
++      // ^ and " on French keyboards
++      //case 221: /* ]            */ ch = this.applyModifiers(93, event); break;
+       case 222: /* '            */ ch = this.applyModifiers(39, event); break;
+       default:                                                          return;
+       }
+@@ -2883,6 +2887,22 @@
+   this.lastKeyPressedEvent      = undefined;
+   this.lastKeyDownEvent         = undefined;
+   this.lastNormalKeyDownEvent   = event;
++  // Swiss keyboard conflicts:
++  // [  59
++  // \      60
++  // €      69
++  // ] 192 161
++  // ' 219 (dead key)
++  // { 220
++  // ~ 221 (dead key)
++  // } 223 164
++  // French keyoard conflicts:
++  // ~ 50 (dead key)
++  // } 107
++  // : 191  58
++  // ) 219 169
++  // * 220 170
++  // ù 192 165
+ 
+   var asciiKey                  =
+     event.keyCode ==  32                         ||
+@@ -2890,15 +2910,21 @@
+     event.keyCode >=  65 && event.keyCode <=  90;
+   var alphNumKey                =
+     asciiKey                                     ||
++    event.keyCode >=  58 && event.keyCode <=  69 ||
+     event.keyCode >=  96 && event.keyCode <= 105 ||
++    event.keyCode == 107 || event.keyCode == 161 ||
++    event.keyCode == 164 || event.keyCode == 165 ||
++    event.keyCode == 169 || event.keyCode == 170 ||
++    event.keyCode == 173 || event.keyCode == 192 ||
++    event.keyCode >= 219 && event.keyCode <= 221 ||
++    event.keyCode == 223 ||
+     event.keyCode == 226;
+   var normalKey                 =
+     alphNumKey                                   ||
+-    event.keyCode ==  59 || event.keyCode ==  61 ||
+-    event.keyCode == 106 || event.keyCode == 107 ||
++    event.keyCode ==  61 || event.keyCode == 106 ||
+     event.keyCode >= 109 && event.keyCode <= 111 ||
+-    event.keyCode >= 186 && event.keyCode <= 192 ||
+-    event.keyCode >= 219 && event.keyCode <= 223 ||
++    event.keyCode >= 186 && event.keyCode <= 191 ||
++    event.keyCode == 222 ||
+     event.keyCode == 252;
+   try {
+     if (navigator.appName == 'Konqueror') {
+@@ -3026,13 +3052,16 @@
+       this.catchModifiersEarly    = true;
+       var asciiKey                =
+         event.keyCode ==  32                         ||
+-        event.keyCode >=  48 && event.keyCode <=  57 ||
++        // Conflicts with dead key ~ (code 50) on French keyboards
++        event.keyCode >=  48 && event.keyCode <=  49 ||
++        event.keyCode >=  51 && event.keyCode <=  57 ||
+         event.keyCode >=  65 && event.keyCode <=  90;
+       var alphNumKey              =
+         asciiKey                                     ||
+         event.keyCode >=  96 && event.keyCode <= 105;
+       var normalKey               =
+         alphNumKey                                   ||
++        event.keyCode ==  50 ||
+         event.keyCode ==  59 || event.keyCode ==  61 ||
+         event.keyCode == 106 || event.keyCode == 107 ||
+         event.keyCode >= 109 && event.keyCode <= 111 ||

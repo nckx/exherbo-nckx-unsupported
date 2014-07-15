@@ -1,0 +1,481 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+		<meta name="Author" content="Todd C. Miller">
+		<meta name="Modified" content="$Date: 2012/07/30 18:44:06 $">
+		<meta name="RCSId" content="$Id: template.wml,v 1.69 2012/07/30 18:44:06 millert Exp $">
+		<meta name="Keyword" content="sudo,main,homepage">
+		<meta name="Description" content="sudo main page">
+		<meta name="Copyright" content="This document copyright 2012 by Todd C. Miller">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Sudo Main Page</title>
+		<style type="text/css">
+			<!--
+				@import "/sudo/css/skidoo_redux.css";
+				@import "/sudo/css/skidoo_redux_theme.css";
+				@import "/sudo/css/misc.css";
+				@import "/sudo/css/mandoc.css";
+			-->
+		</style>
+		<link rel="stylesheet" href="/sudo/css/skidoo_redux_print.css" type="text/css" media="print">
+		<script type="text/javascript" src="/sudo/javascript/ruthsarian_utilities.js"></script>
+		<script type="text/javascript">
+		<!--
+			var font_sizes=new Array( 100, 110, 120 );
+			var current_font_size=0;
+			if ( ( typeof( loadFontSize ) ).toLowerCase() != 'undefined' ) { event_attach( 'onload' , loadFontSize ); }
+			if ( ( typeof( set_min_width ) ).toLowerCase() != 'undefined' ) { set_min_width( 'page-container' , 600 ); }
+			if ( ( typeof( sfHover ) ).toLowerCase() != 'undefined' ) { event_attach( 'onload' , function () {
+				sfHover( 'leftmenu' );
+				sfHover( 'middlemenu' );
+			} ); }
+		//-->
+		</script>
+	</head>
+	<body>
+		<div id="page-container">
+			<div id="outer-column-container">
+				<div id="inner-column-container">
+					<div id="source-order-container">
+						<div id="middle-column">
+			<div id="masthead">
+				<div class="inside">
+					<h1>Sudo Main Page</h1>
+<div>
+<form action="http://www.google.com/cse" id="cse-search-box">
+<div id="masthead-search">
+<input type="hidden" name="cx" value="016495475797105756762:xqc9ybxeoai">
+<input type="hidden" name="ie" value="UTF-8">
+<input type="text" name="q" size="20">
+<input type="submit" name="sa" value="Search">
+</div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+</div>
+				</div>
+			</div>
+							<div class="inside">
+<div>
+<h3 class="headingbg">
+    <img src="/sudo/images/spacer.gif" width="1" height="5" alt="">
+    What is Sudo?
+</h3>
+Sudo (su "do") allows a system administrator to delegate authority
+to give certain users (or groups of users) the ability to run some
+(or all) commands as root or another user while providing an audit
+trail of the commands and their arguments.
+For more information, see the
+<a href="/sudo/intro.html">introduction to Sudo</a>.
+Sudo is <em>free software</em>, distributed under an
+<a href="/sudo/license.html">ISC-style license</a>.
+<p> &nbsp; </p>
+<h3 class="headingbg">
+    <img src="/sudo/images/spacer.gif" width="1" height="5" alt="">
+    Releases
+</h3>
+<p>
+The current <a href="/sudo/stable.html">stable</a> release is
+<a href="/sudo/dist/sudo-1.8.6.tar.gz">sudo 1.8.6</a>,
+released on September 4, 2012.
+<br>
+The current <a href="/sudo/maintenance.html">maintenance</a> release is
+<a href="/sudo/dist/sudo-1.7.10.tar.gz">sudo 1.7.10</a>,
+released on September 4, 2012.
+<br>
+See the <a href="/sudo/download.html">download page</a> for a list of
+<a href="/sudo/download.html#binary">binary packages</a>.
+</p>
+<!--
+<p>
+The current <a href="/sudo/devel.html">development</a> release is
+<a href="/sudo/dist/beta/sudo-1.7.10b1.tar.gz">sudo 1.7.10b1</a>,
+released on May 24, 2012.
+</p>
+-->
+<!--
+<p>
+The current <a href="/sudo/devel.html">development</a> releases are
+<a href="/sudo/dist/beta/sudo-1.8.6rc3.tar.gz">sudo 1.8.6rc3</a>
+released on August 28, 2012
+and
+<a href="/sudo/dist/beta/sudo-1.7.10rc5.tar.gz">sudo 1.7.10rc5</a>,
+released on August 28, 2012.
+</p>
+-->
+<p> &nbsp; </p>
+<h3 class="headingbg">
+    <img src="/sudo/images/spacer.gif" width="1" height="5" alt="">
+    News
+</h3>
+<p class="datehangingindent">
+    <em>[2012-09-04]</em>
+    <a href="/sudo/dist/sudo-1.8.6.tar.gz">Sudo version 1.8.6</a> released.
+    <a href="/sudo/stable.html#1.8.6">Major changes in sudo 1.8.6</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-09-04]</em>
+    <a href="/sudo/dist/sudo-1.7.10.tar.gz">Sudo version 1.7.10</a> released.
+    <a href="/sudo/stable.html#1.7.10">Major changes in sudo 1.7.10</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-08-13]</em>
+    <a href="/sudo/dist/sudo-1.8.5p3.tar.gz">Sudo version 1.8.5p3</a> released.
+    <a href="/sudo/stable.html#1.8.5p3">Major changes in sudo 1.8.5p3</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-05-17]</em>
+    <a href="/sudo/dist/sudo-1.8.5p1.tar.gz">Sudo version 1.8.5p1</a> released.
+    <a href="/sudo/stable.html#1.8.5p1">Major changes in sudo 1.8.5p1</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-05-16]</em>
+    <a href="/sudo/dist/sudo-1.8.5.tar.gz">Sudo version 1.8.5</a> released.
+    <a href="/sudo/stable.html#1.8.5">Major changes in sudo 1.8.5</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-05-16]</em>
+    <a href="/sudo/dist/sudo-1.8.4p5.tar.gz">Sudo version 1.8.4p5</a> released.
+    <a href="/sudo/stable.html#1.8.4p5">Major changes in sudo 1.8.4p5</a>.
+    <br>
+    <a href="/sudo/dist/sudo-1.7.9p1.tar.gz">Sudo version 1.7.9p1</a> released.
+    <a href="/sudo/maintenance.html#1.7.9p1">Major changes in sudo 1.7.9p1</a>.
+    <br>
+    These releases fix a potential
+    <a href="/sudo/alerts/netmask.html">security issue</a>
+    that may allow a user who is authorized to run commands on hosts
+    belonging to one IPv4 network to run commands on a different host.
+</p>
+<p class="datehangingindent">
+    <em>[2012-03-12]</em>
+    <a href="/sudo/dist/sudo-1.8.4p4.tar.gz">Sudo version 1.8.4p4</a> released.
+    <a href="/sudo/stable.html#1.8.4p4">Major changes in sudo 1.8.4p4</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-05-16]</em>
+    <a href="/sudo/dist/sudo-1.8.4p3.tar.gz">Sudo version 1.8.4p3</a> released.
+    <a href="/sudo/stable.html#1.8.4p3">Major changes in sudo 1.8.4p3</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-02-27]</em>
+    <a href="/sudo/dist/sudo-1.8.4p2.tar.gz">Sudo version 1.8.4p2</a> released.
+    <a href="/sudo/stable.html#1.8.4p2">Major changes in sudo 1.8.4p2</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-02-21]</em>
+    <a href="/sudo/dist/sudo-1.8.4p1.tar.gz">Sudo version 1.8.4p1</a> released.
+    <a href="/sudo/stable.html#1.8.4p1">Major changes in sudo 1.8.4p1</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-02-17]</em>
+    <a href="/sudo/dist/sudo-1.8.4.tar.gz">Sudo version 1.8.4</a> released.
+    <a href="/sudo/stable.html#1.8.4">Major changes in sudo 1.8.4</a>.
+    <br>
+    <a href="/sudo/dist/sudo-1.7.9.tar.gz">Sudo version 1.7.9</a> released.
+    <a href="/sudo/maintenance.html#1.7.9">Major changes in sudo 1.7.9</a>.
+</p>
+<p class="datehangingindent">
+    <em>[2012-01-30]</em>
+    <a href="/sudo/dist/sudo-1.8.3p2.tar.gz">Sudo version 1.8.3p2</a> released.
+    <a href="/sudo/stable.html#1.8.3p2">Major changes in sudo 1.8.3p2</a>.
+    This release fixes a potential
+    <a href="/sudo/alerts/sudo_debug.html">format string vulnerability</a>
+    when the -D (debugging) flag is used.
+</p>
+<p class="datehangingindent">
+    <em>[2012-01-27]</em>
+    <a href="/sudo/dist/sudo-1.7.8p2.tar.gz">Sudo version 1.7.8p2</a> released.
+    <a href="/sudo/maintenance.html#1.7.8p2">Major changes in sudo 1.7.8p2</a>.
+    Sudo 1.7.8p2 is a bug fix release.
+</p>
+<!--
+<p class="datehangingindent">
+    <em>[2011-12-15]</em>
+    <a href="http://www.quest.com/quest-one-privilege-manager-for-sudo/">Quest
+    One Privilege Manager for Sudo</a> is now available. This is
+    the first third-party <a href="/sudo/plugins.html">plugin</a>
+    for Sudo 1.8.1 and higher.
+</p>
+<p class="datehangingindent">
+    <em>[2011-10-25]</em>
+    <a href="/sudo/dist/sudo-1.8.3p1.tar.gz">Sudo version 1.8.3p1</a> released.
+    <a href="/sudo/stable.html#1.8.3p1">Major changes in sudo 1.8.3p1</a>.
+    <br>
+    Sudo 1.8.3p1 is a bug fix release.
+</p>
+<p class="datehangingindent">
+    <em>[2011-10-21]</em>
+    <a href="/sudo/dist/sudo-1.7.8p1.tar.gz">Sudo version 1.7.8p1</a> released.
+    <a href="/sudo/maintenance.html#1.7.8p1">Major changes in sudo 1.7.8p1</a>.
+    <br>
+    Sudo 1.7.8p1 is a bug fix release.
+</p>
+<p class="datehangingindent">
+    <em>[2011-10-21]</em>
+    <a href="/sudo/dist/sudo-1.8.3.tar.gz">Sudo version 1.8.3</a> released.
+    <a href="/sudo/stable.html#1.8.3">Major changes in sudo 1.8.3</a>.
+    <br>
+    Sudo 1.8.3 includes Esperanto, Italian and Japanese translations as
+    well as bug fixes.
+</p>
+<p class="datehangingindent">
+    <em>[2011-10-21]</em>
+    <a href="/sudo/dist/sudo-1.7.8.tar.gz">Sudo version 1.7.8</a> released.
+    <a href="/sudo/maintenance.html#1.7.8">Major changes in sudo 1.7.8</a>.
+    <br>
+    Sudo 1.7.8 is a bug fix release.
+</p>
+<p class="datehangingindent">
+    <em>[2011-08-17]</em>
+    <a href="/sudo/dist/sudo-1.8.2.tar.gz">Sudo version 1.8.2</a> released.
+    <a href="/sudo/stable.html#1.8.2">Major changes in sudo 1.8.2</a>.
+    <br>
+    Sudo 1.8.2 is the first release to include
+    <a href="/sudo/dist/nls.html">natural language support</a>.
+    Translations are coordinated via
+    <a href="http://translationproject.org/">translationproject.org</a>.
+    If you wish to help translate Sudo, please join the Translation
+    Project rather than submitting an independent translation.
+</p>
+<p class="datehangingindent">
+    <em>[2011-08-17]</em>
+    <a href="/sudo/dist/sudo-1.7.7.tar.gz">Sudo version 1.7.7</a> released.
+    <a href="/sudo/maintenance.html#1.7.7">Major changes in sudo 1.7.7</a>.
+    <br>
+    Sudo 1.7.7 is primarily a bug fix release.
+</p>
+<p class="datehangingindent">
+    <em>[2011-05-16]</em>
+    <a href="/sudo/dist/sudo-1.8.1p2.tar.gz">Sudo version 1.8.1p2</a> released.
+    <a href="/sudo/stable.html#1.8.1p2">Major changes in sudo 1.8.1p2</a>.
+    <br>
+    <a href="/sudo/dist/sudo-1.7.6p2.tar.gz">Sudo version 1.7.6p2</a> released.
+    <a href="/sudo/maintenance.html#1.7.6p2">Major changes in sudo 1.7.6p1</a>.
+    <br>
+    This patchlevel fixes a small number bugs in sudo 1.8.1p1 and 1.7.6p1.
+</p>
+<p class="datehangingindent">
+    <em>[2011-04-09]</em>
+    <a href="/sudo/dist/sudo-1.8.1.tar.gz">Sudo version 1.8.1</a> released.
+    <a href="/sudo/stable.html#1.8.1">Major changes in sudo 1.8.1</a>.
+    <br>
+    <a href="/sudo/dist/sudo-1.7.6.tar.gz">Sudo version 1.7.6</a> released.
+    <a href="/sudo/maintenance.html#1.7.6">Major changes in sudo 1.7.6</a>.
+    <br>
+    This is primarily a bug fix release.
+</p>
+<p class="datehangingindent">
+    <em>[2011-02-27]</em>
+    Sudo version <a href="/sudo/dist/sudo-1.8.0.tar.gz">1.8.0</a>
+    released at <a href="http://www.socallinuxexpo.org/scale9x/">SCALE 9x</a>.
+    Sudo 1.8.0 adds support for dynamically-loaded policy and I/O logging
+    modules.
+    The <a href="/sudo/slides/Sudo_SCALE9x.pdf">slides from the presentation</a>
+    are available.
+</p>
+<p class="datehangingindent">
+    <em>[2011-02-27]</em>
+    Sudo version <a href="/sudo/dist/sudo-1.7.5.tar.gz">1.7.5</a> released.
+    <a href="/sudo/maintenance.html#1.7.5">Major changes in sudo 1.7.5</a>.
+</p>
+-->
+<h4><a href="/sudo/news.html">Older news...</a></h4>
+<p> &nbsp; </p>
+<h3 class="headingbg">
+    <img src="/sudo/images/spacer.gif" width="1" height="5" alt="">
+    Help Support Sudo
+</h3>
+Your donations will help ensure future sudo development by defraying the
+costs of web hosting and domain registration.
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<div>
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="paypal@sudo.ws">
+<input type="hidden" name="item_name" value="Sudo donation">
+<input type="hidden" name="no_shipping" value="1">
+<input type="hidden" name="return" value="http://www.sudo.ws/sudo/thanks.html">
+<input type="hidden" name="cancel_return" value="http://www.sudo.ws/sudo/">
+<input type="hidden" name="no_note" value="1">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="tax" value="0">
+<input type="hidden" name="lc" value="US">
+<input type="hidden" name="bn" value="PP-DonationsBF">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="Make Donation">
+<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</div>
+</form>
+</div>
+							</div>
+						</div>
+						<div id="left-column">
+							<div class="inside">
+<div id="left-column-logo"></div>
+<h3>About&nbsp;Sudo</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li><a href="/sudo/sudo.html">Sudo&nbsp;Home</a></li>
+	<li><a href="/sudo/intro.html">A&nbsp;Short&nbsp;Introduction</a></li>
+	<li><a href="/sudo/stable.html">Stable&nbsp;Release</a></li>
+	<li><a href="/sudo/maintenance.html">Maintenance&nbsp;Release</a></li>
+	<li><a href="/sudo/devel.html">Development&nbsp;Release</a></li>
+	<li><a href="/sudo/history.html">A&nbsp;Brief&nbsp;History</a></li>
+	<li><a href="/sudo/contributors.html">Contributors</a></li>
+	<li><a href="/sudo/news.html">Sudo&nbsp;News</a></li>
+	<li><a href="/sudo/nls.html">NLS&nbsp;Support</a></li>
+	<li><a href="/sudo/plugins.html">Sudo&nbsp;Plugins</a></li>
+</ul>
+<!-- XXX convert "Getting Sudo" into "Download" with a submenu for each link -->
+<h3>Getting&nbsp;Sudo</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li><a href="/sudo/download.html">Download Sudo</a></li>
+	<li><a href="http://sudo.ws/repos/sudo">Browse Source</a></li>
+	<li><a href="/sudo/hg.html">Checkout Source</a></li>
+	<li><a href="/sudo/mirror.html">Mirroring&nbsp;Sudo</a></li>
+</ul>
+<h3>Documentation</h3>
+<ul id="leftmenu" class="rMenu-wide rMenu-ver rMenu">
+	<li class="rMenu-expand">
+		<a href="/sudo/man.html">Manual Pages</a>
+		<ul class="rMenu-ver">
+			<li class="rMenu-expand">
+			<a href="">Sudo 1.8.6</a>
+			    <ul class="">
+				<li>
+					<a href="/sudo/man/1.8.6/sudo.man.html">Sudo</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.8.6/sudoers.man.html">Sudoers</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.8.6/sudoers.ldap.man.html">LDAP&nbsp;Sudoers</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.8.6/sudoreplay.man.html">Sudoreplay</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.8.6/visudo.man.html">Visudo</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.8.6/sudo_plugin.man.html">Plugin API</a>
+				</li>
+			    </ul>
+			<li class="rMenu-expand">
+			<a href="">Sudo 1.7.10</a>
+			    <ul class="">
+				<li>
+					<a href="/sudo/man/1.7.10/sudo.man.html">Sudo</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.7.10/sudoers.man.html">Sudoers</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.7.10/sudoers.ldap.man.html">LDAP&nbsp;Sudoers</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.7.10/sudoreplay.man.html">Sudoreplay</a>
+				</li>
+				<li>
+					<a href="/sudo/man/1.7.10/visudo.man.html">Visudo</a>
+				</li>
+			    </ul>
+			</li>
+			<li>
+			    <a href="/sudo/man.html">More...</a>
+			</li>
+		</ul>
+	</li>
+	<li class="rMenu-expand">
+		<a href="/sudo/readme.html">README&nbsp;Files</a>
+		<ul class="rMenu-ver">
+			<li>
+				<a href="/sudo/readme.html">Sudo</a>
+			</li>
+			<li>
+				<a href="/sudo/readme_ldap.html">LDAP</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="/sudo/install.html">Installation&nbsp;Notes</a>
+	</li>
+	<li>
+		<a href="/sudo/packaging.html">Building&nbsp;Packages</a>
+	</li>
+	<li>
+		<a href="/sudo/troubleshooting.html">Troubleshooting&nbsp;FAQ</a>
+	</li>
+	<li>
+		<a href="/sudo/license.html">License</a>
+	</li>
+	<li>
+		<a href="/sudo/changes.html">Changelog</a>
+	</li>
+	<li>
+		<a href="/sudo/doc_other.html">Other&nbsp;Documentation</a>
+	</li>
+</ul>
+<h3>Sudo&nbsp;Resources</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li><a href="/sudo/mirrors.html">Web&nbsp;Site&nbsp;Mirrors</a></li>
+	<li><a href="/sudo/lists.html">Mailing&nbsp;Lists</a></li>
+	<li><a href="/sudo/security.html">Sudo&nbsp;Security&nbsp;Alerts</a></li>
+	<li><a href="http://www.sudo.ws/bugs">Bug&nbsp;Tracker</a></li>
+	<li><a href="/sudo/other.html">Sudo&nbsp;Alternatives</a></li>
+</ul>
+<h3>Other</h3>
+<!-- XXX move into another section with a submenu for each link -->
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li><a href="http://www.gratisoft.us">GratiSoft&nbsp;Home</a></li>
+	<li><a href="http://www.mktemp.org/mktemp">Mktemp&nbsp;page</a></li>
+	<li><a href="http://www.newsyslog.org/newsyslog">Newsyslog&nbsp;page</a></li>
+	<li><a href="http://www.courtesan.com/todd">Todd's&nbsp;page</a></li>
+</ul>
+<p class="fontsize-set">
+	<input type="image" onclick="setFontSize(0); return false;"
+		src="/sudo/images/font_small.gif" alt="S" title="Small Font">
+	<input type="image" onclick="setFontSize(1); return false;"
+		src="/sudo/images/font_medium.gif" alt="M" title="Medium Font">
+	<input type="image" onclick="setFontSize(2); return false;"
+		src="/sudo/images/font_large.gif" alt="L" title="Large Font">
+</p>
+<noscript>
+	<p class="fontsize-set">
+		JavaScript Required
+	</p>
+</noscript>
+<!--
+<p>
+	<img src="/sudo/images/sudo-logo-small.png" alt="[Sudo Logo]" width="150" height="142">
+</p>
+<p>
+	<img src="/sudo/images/openbsd_pb.gif" alt="[Powered by OpenBSD]" width="150" height="40">
+</p>
+-->
+<!--
+<p>
+	<a href="http://validator.w3.org/check/referer"><img
+	src="/sudo/images/valid-html401.png"
+	alt="Valid HTML 4.01!" height="31" width="88"></a>
+</p>
+-->
+<!-- we use hacks for old gecko that are not css compliant
+<p>
+	<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3"><img
+	src="/sudo/images/valid-css.png"
+	alt="Valid CSS!" height="31" width="88"></a>
+</p>
+-->
+							</div>
+						</div>
+						<div class="clear-columns"><!-- do not delete --></div>
+					</div>
+					<div class="clear-columns"><!-- do not delete --></div>
+				</div>
+			</div>
+			<div id="footer">
+				<div class="inside">
+<p>&copy; 2012 Todd C. Miller&nbsp;&lt;&#84;odd&#46;Miller&#64;courtesan&#46;&#99om&gt;</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

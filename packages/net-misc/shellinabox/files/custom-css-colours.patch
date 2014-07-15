@@ -1,0 +1,33 @@
+--- a/shellinabox/styles.css	2013-02-22 09:36:07.798840128 +0100
++++ b/shellinabox/styles.css	2013-02-22 09:43:34.762268760 +0100
+@@ -38,6 +38,8 @@
+ }
+ 
+ #vt100 #scrollable {
++  color:                #cccccc;
++  background-color:     #002222;
+   overflow-x:           hidden;
+   overflow-y:           scroll;
+   position:             relative;
+@@ -62,8 +64,8 @@
+ }
+ 
+ #vt100 #cursor.bright {
+-  background-color:     black;
+-  color:                white;
++  background-color:     white;
++  color:                black;
+ }
+ 
+ #vt100 #cursor.dim {
+@@ -133,8 +135,8 @@
+   height:               1ex;
+ }
+ 
+-#vt100 #scrollable.inverted { color:            #ffffff;
+-                              background-color: #000000; }
++#vt100 #scrollable.inverted { color:            white;
++                              background-color: darkorange; }
+ 
+ #vt100 #kbd_button { 
+   float:                left;

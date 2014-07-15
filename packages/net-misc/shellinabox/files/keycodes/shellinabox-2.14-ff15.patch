@@ -1,0 +1,405 @@
+diff -Naur shellinabox-2.14.org/demo/vt100.js shellinabox-2.14.new/demo/vt100.js
+--- shellinabox-2.14.org/demo/vt100.js	2012-04-21 19:30:44.000000000 +0200
++++ shellinabox-2.14.new/demo/vt100.js	2012-09-25 23:45:16.000000000 +0200
+@@ -887,7 +887,7 @@
+                        '<div class="hidden">' +
+                          '<div id="usercss"></div>' +
+                          '<pre><div><span id="space"></span></div></pre>' +
+-                         '<input type="textfield" id="input" />' +
++                         '<input type="textfield" id="input" autocorrect="off" autocapitalize="off" />' +
+                          '<input type="textfield" id="cliphelper" />' +
+                          (typeof suppressAllAudio != 'undefined' &&
+                           suppressAllAudio ? "" :
+@@ -1047,6 +1047,24 @@
+   this.addListener(this.scrollable,'mouseup',  mouseEvent(this, 1 /* MOUSE_UP */));
+   this.addListener(this.scrollable,'click',    mouseEvent(this, 2 /* MOUSE_CLICK */));
+ 
++  // Check that browser supports drag and drop
++  if ('draggable' in document.createElement('span')) {
++      var dropEvent            = function (vt100) {
++          return function(e) {
++              if (!e) e = window.event;
++              if (e.preventDefault) e.preventDefault();
++              vt100.keysPressed(e.dataTransfer.getData('Text'));
++              return false;
++          };
++      };
++      // Tell the browser that we *can* drop on this target
++      this.addListener(this.scrollable, 'dragover', cancel);
++      this.addListener(this.scrollable, 'dragenter', cancel);
++
++      // Add a listener for the drop event
++      this.addListener(this.scrollable, 'drop', dropEvent(this));
++  }
++  
+   // Initialize the blank terminal window.
+   this.currentScreen           = 0;
+   this.cursorX                 = 0;
+@@ -1060,6 +1078,13 @@
+   this.input.focus();
+ };
+ 
++function cancel(event) {
++  if (event.preventDefault) {
++    event.preventDefault();
++  }
++  return false;
++}
++
+ VT100.prototype.getChildById = function(parent, id) {
+   var nodeList = parent.all || parent.getElementsByTagName('*');
+   if (typeof nodeList.namedItem == 'undefined') {
+@@ -1106,7 +1131,7 @@
+         for (var span = line.firstChild; span; span = span.nextSibling) {
+           var newSpan             = document.createElement(span.tagName);
+           newSpan.style.cssText   = span.style.cssText;
+-          newSpan.style.className = span.style.className;
++          newSpan.className	  = span.className;
+           this.setTextContent(newSpan, this.getTextContent(span));
+           newLine.appendChild(newSpan);
+         }
+@@ -1517,7 +1542,7 @@
+     line                 = document.createElement('div');
+     var span             = document.createElement('span');
+     span.style.cssText   = style;
+-    span.style.className = color;
++    span.className	 = color;
+     this.setTextContent(span, this.spaces(this.terminalWidth));
+     line.appendChild(span);
+   }
+@@ -2321,6 +2346,13 @@
+   }
+ };
+ 
++VT100.prototype.pasteBrowserFnc = function() {
++  var clipboard     = prompt("Paste into this box:","");
++  if (clipboard != undefined) {
++     return this.keysPressed('' + clipboard);
++  }
++};
++
+ VT100.prototype.toggleUTF = function() {
+   this.utfEnabled   = !this.utfEnabled;
+ 
+@@ -2426,6 +2458,7 @@
+         '<ul id="menuentries">' +
+           '<li id="beginclipboard">Copy</li>' +
+           '<li id="endclipboard">Paste</li>' +
++          '<li id="browserclipboard">Paste from browser</li>' +
+           '<hr />' +
+           '<li id="reset">Reset</li>' +
+           '<hr />' +
+@@ -2467,7 +2500,7 @@
+   }
+ 
+   // Actions for default items
+-  var actions                 = [ this.copyLast, p, this.reset,
++  var actions                 = [ this.copyLast, p, this.pasteBrowserFnc, this.reset,
+                                   this.toggleUTF, this.toggleBell,
+                                   this.toggleSoftKeyboard,
+                                   this.toggleCursorBlinking ];
+@@ -2673,6 +2706,32 @@
+                              '\u001BOB' : '\u001B[B';                   break;
+       case  45: /* Insert       */ ch = '\u001B[2~';                    break;
+       case  46: /* Delete       */ ch = '\u001B[3~';                    break;
++      case  60: /* < */
++	if (event.altKey) {
++	  ch = String.fromCharCode(124);
++	} else if (event.shiftKey) {
++	  ch = String.fromCharCode(62);
++	} else {
++	  ch = String.fromCharCode(60);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15bf 
++      case 63: /* szlig            */ 
++	if (event.altKey) {
++	  ch = String.fromCharCode(92);
++	} else if (event.shiftKey) {
++	  ch = String.fromCharCode(63);
++	} else {
++	  ch = String.fromCharCode(223);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15b_
+       case  91: /* Left Window  */                                      return;
+       case  92: /* Right Window */                                      return;
+       case  93: /* Select       */                                      return;
+@@ -2705,18 +2764,69 @@
+       case 123: /* F12          */ ch = '\u001B[24~';                   break;
+       case 144: /* Num Lock     */                                      return;
+       case 145: /* Scroll Lock  */                                      return;
++      case 160: /* ^            */ 
++	if (event.shiftKey) {
++	  ch = String.fromCharCode(176);
++	} else {
++	  ch = String.fromCharCode(94);
++	}
++	break; // FF15bf
++      case 163: /* #            */ 
++	if (event.shiftKey) {
++	  ch = String.fromCharCode(39);
++	} else {
++	  ch = String.fromCharCode(35);
++	}
++	break; // FF15bf
++      case 171: /* +            */ 
++	if (event.altKey) {
++	  ch = String.fromCharCode(126);
++	} else if (event.shiftKey) {
++	  ch = String.fromCharCode(42);
++	} else {
++	  ch = String.fromCharCode(43);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15bf
++      case 173: /* -            */ 
++	if (event.shiftKey) {
++	  ch = this.applyModifiers(95, event);
++	} else {
++	  ch = String.fromCharCode(45);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15bf
+       case 186: /* ;            */ ch = this.applyModifiers(59, event); break;
+       case 187: /* =            */ ch = this.applyModifiers(61, event); break;
+       case 188: /* ,            */ ch = this.applyModifiers(44, event); break;
+       case 189: /* -            */ ch = this.applyModifiers(45, event); break;
+       case 190: /* .            */ ch = this.applyModifiers(46, event); break;
+       case 191: /* /            */ ch = this.applyModifiers(47, event); break;
+-      case 192: /* `            */ ch = this.applyModifiers(96, event); break;
+-      case 219: /* [            */ ch = this.applyModifiers(91, event); break;
++      // Conflicts with dead key " on Swiss keyboards
++      //case 192: /* `            */ ch = this.applyModifiers(96, event); break;
++      case 192: /* `           */ 
++	if (event.shiftKey) {
++	  ch = String.fromCharCode(96);
++	} else {
++	  ch = String.fromCharCode(180);
++	}
++	break; // FF15bf
++      // Conflicts with dead key " on Swiss keyboards
++      //case 219: /* [            */ ch = this.applyModifiers(91, event); break;
+       case 220: /* \            */ ch = this.applyModifiers(92, event); break;
+-      case 221: /* ]            */ ch = this.applyModifiers(93, event); break;
++      // Conflicts with dead key ^ and ` on Swiss keaboards
++      //                         ^ and " on French keyboards
++      //case 221: /* ]            */ ch = this.applyModifiers(93, event); break;
+       case 222: /* '            */ ch = this.applyModifiers(39, event); break;
+-      default:                                                          return;
++      default:
++	//alert("unknown key: " + (key + 1) + ", ch:" + (ch + 1));
++                                                          return;
+       }
+       this.scrollable.scrollTop       = this.numScrollbackLines *
+                                         this.cursorHeight + 1;
+@@ -2884,21 +2994,36 @@
+   this.lastKeyDownEvent         = undefined;
+   this.lastNormalKeyDownEvent   = event;
+ 
++  // Swiss keyboard conflicts:
++  // [ 59
++  // ] 192
++  // ' 219 (dead key)
++  // { 220
++  // ~ 221 (dead key)
++  // } 223
++  // French keyoard conflicts:
++  // ~ 50 (dead key)
++  // } 107
+   var asciiKey                  =
+     event.keyCode ==  32                         ||
+     event.keyCode >=  48 && event.keyCode <=  57 ||
+     event.keyCode >=  65 && event.keyCode <=  90;
+   var alphNumKey                =
+     asciiKey                                     ||
++    event.keyCode ==  59 ||
+     event.keyCode >=  96 && event.keyCode <= 105 ||
++    event.keyCode == 107 ||
++    event.keyCode == 192 ||
++    event.keyCode >= 219 && event.keyCode <= 221 ||
++    event.keyCode == 223 ||
+     event.keyCode == 226;
+   var normalKey                 =
+     alphNumKey                                   ||
+-    event.keyCode ==  59 || event.keyCode ==  61 ||
+-    event.keyCode == 106 || event.keyCode == 107 ||
++    event.keyCode ==  61 ||
++    event.keyCode == 106 ||
+     event.keyCode >= 109 && event.keyCode <= 111 ||
+-    event.keyCode >= 186 && event.keyCode <= 192 ||
+-    event.keyCode >= 219 && event.keyCode <= 223 ||
++    event.keyCode >= 186 && event.keyCode <= 191 ||
++    event.keyCode == 222 ||
+     event.keyCode == 252;
+   try {
+     if (navigator.appName == 'Konqueror') {
+@@ -3026,10 +3151,14 @@
+       this.catchModifiersEarly    = true;
+       var asciiKey                =
+         event.keyCode ==  32                         ||
+-        event.keyCode >=  48 && event.keyCode <=  57 ||
++        // Conflicts with dead key ~ (code 50) on French keyboards
++        //event.keyCode >=  48 && event.keyCode <=  57 ||
++        event.keyCode >=  48 && event.keyCode <=  49 ||
++        event.keyCode >=  51 && event.keyCode <=  57 ||
+         event.keyCode >=  65 && event.keyCode <=  90;
+       var alphNumKey              =
+         asciiKey                                     ||
++        event.keyCode ==  50                         ||
+         event.keyCode >=  96 && event.keyCode <= 105;
+       var normalKey               =
+         alphNumKey                                   ||
+diff -Naur shellinabox-2.14.org/shellinabox/cgi_root.html shellinabox-2.14.new/shellinabox/cgi_root.html
+--- shellinabox-2.14.org/shellinabox/cgi_root.html	2012-04-21 19:30:44.000000000 +0200
++++ shellinabox-2.14.new/shellinabox/cgi_root.html	2012-06-22 10:54:21.000000000 +0200
+@@ -47,7 +47,7 @@
+     The most up-to-date version of this program is always available from
+     http://shellinabox.com
+     -->
+-    <title>Shell In A Box</title>
++    <title>News</title>
+     <script type="text/javascript"><!--
+     (function() {
+       var url   = document.location.protocol + '//' +
+diff -Naur shellinabox-2.14.org/shellinabox/root_page.html shellinabox-2.14.new/shellinabox/root_page.html
+--- shellinabox-2.14.org/shellinabox/root_page.html	2012-04-21 19:30:44.000000000 +0200
++++ shellinabox-2.14.new/shellinabox/root_page.html	2012-06-22 10:53:54.000000000 +0200
+@@ -47,7 +47,7 @@
+     The most up-to-date version of this program is always available from
+     http://shellinabox.com
+     -->
+-    <title>Shell In A Box</title>
++    <title>News</title>
+     <script type="text/javascript"><!--
+       // Check that our URL is well-formed. Redirect to HTTPS if necessary
+       (function() {
+diff -Naur shellinabox-2.14.org/shellinabox/shell_in_a_box.js shellinabox-2.14.new/shellinabox/shell_in_a_box.js
+--- shellinabox-2.14.org/shellinabox/shell_in_a_box.js	2012-04-21 19:30:44.000000000 +0200
++++ shellinabox-2.14.new/shellinabox/shell_in_a_box.js	2012-06-22 10:51:48.000000000 +0200
+@@ -129,6 +129,7 @@
+       if (this.cursorX > 0) {
+         this.vt100('\r\n');
+       }
++      this.reset(); 
+       this.vt100('Session closed.');
+     }
+     this.showReconnect(true);
+diff -Naur shellinabox-2.14.org/shellinabox/vt100.js shellinabox-2.14.new/shellinabox/vt100.js
+--- shellinabox-2.14.org/shellinabox/vt100.js	2012-04-21 19:30:44.000000000 +0200
++++ shellinabox-2.14.new/shellinabox/vt100.js	2012-09-25 23:45:16.000000000 +0200
+@@ -2706,6 +2706,32 @@
+                              '\u001BOB' : '\u001B[B';                   break;
+       case  45: /* Insert       */ ch = '\u001B[2~';                    break;
+       case  46: /* Delete       */ ch = '\u001B[3~';                    break;
++      case  60: /* < */
++	if (event.altKey) {
++	  ch = String.fromCharCode(124);
++	} else if (event.shiftKey) {
++	  ch = String.fromCharCode(62);
++	} else {
++	  ch = String.fromCharCode(60);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15bf 
++      case 63: /* szlig            */ 
++	if (event.altKey) {
++	  ch = String.fromCharCode(92);
++	} else if (event.shiftKey) {
++	  ch = String.fromCharCode(63);
++	} else {
++	  ch = String.fromCharCode(223);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15b_
+       case  91: /* Left Window  */                                      return;
+       case  92: /* Right Window */                                      return;
+       case  93: /* Select       */                                      return;
+@@ -2738,6 +2764,44 @@
+       case 123: /* F12          */ ch = '\u001B[24~';                   break;
+       case 144: /* Num Lock     */                                      return;
+       case 145: /* Scroll Lock  */                                      return;
++      case 160: /* ^            */ 
++	if (event.shiftKey) {
++	  ch = String.fromCharCode(176);
++	} else {
++	  ch = String.fromCharCode(94);
++	}
++	break; // FF15bf
++      case 163: /* #            */ 
++	if (event.shiftKey) {
++	  ch = String.fromCharCode(39);
++	} else {
++	  ch = String.fromCharCode(35);
++	}
++	break; // FF15bf
++      case 171: /* +            */ 
++	if (event.altKey) {
++	  ch = String.fromCharCode(126);
++	} else if (event.shiftKey) {
++	  ch = String.fromCharCode(42);
++	} else {
++	  ch = String.fromCharCode(43);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15bf
++      case 173: /* -            */ 
++	if (event.shiftKey) {
++	  ch = this.applyModifiers(95, event);
++	} else {
++	  ch = String.fromCharCode(45);
++	}
++        if (this.menu.style.visibility == 'hidden') {
++	  this.keysPressed(ch);
++	}
++        return;
++	break; // FF15bf
+       case 186: /* ;            */ ch = this.applyModifiers(59, event); break;
+       case 187: /* =            */ ch = this.applyModifiers(61, event); break;
+       case 188: /* ,            */ ch = this.applyModifiers(44, event); break;
+@@ -2746,6 +2810,13 @@
+       case 191: /* /            */ ch = this.applyModifiers(47, event); break;
+       // Conflicts with dead key " on Swiss keyboards
+       //case 192: /* `            */ ch = this.applyModifiers(96, event); break;
++      case 192: /* `           */ 
++	if (event.shiftKey) {
++	  ch = String.fromCharCode(96);
++	} else {
++	  ch = String.fromCharCode(180);
++	}
++	break; // FF15bf
+       // Conflicts with dead key " on Swiss keyboards
+       //case 219: /* [            */ ch = this.applyModifiers(91, event); break;
+       case 220: /* \            */ ch = this.applyModifiers(92, event); break;
+@@ -2753,7 +2824,9 @@
+       //                         ^ and " on French keyboards
+       //case 221: /* ]            */ ch = this.applyModifiers(93, event); break;
+       case 222: /* '            */ ch = this.applyModifiers(39, event); break;
+-      default:                                                          return;
++      default:
++	//alert("unknown key: " + (key + 1) + ", ch:" + (ch + 1));
++                                                          return;
+       }
+       this.scrollable.scrollTop       = this.numScrollbackLines *
+                                         this.cursorHeight + 1;

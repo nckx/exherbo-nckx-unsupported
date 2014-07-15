@@ -1,0 +1,52 @@
+# Copyright 2014 nckx <mr.nckx@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+#BUGS_TO="https://github.com/nckx/exherbo-repository-nckx/issues"
+
+HOMEPAGE="http://www.acpica.org"
+LICENCES="Intel"
+SLOT="0"
+
+if ever is_scm; then
+    require github [ user=acpica pn=acpica ]
+else
+    DOWNLOADS="${HOMEPAGE}/download/acpica-unix-${PV}.tar.gz"
+    WORK="${WORKBASE}"/acpica-unix-${PV}
+fi
+
+DEPENDENCIES="
+    build:
+        sys-devel/bison
+        sys-devel/flex
+"
+
+export_exlib_phases src_prepare src_compile src_install
+
+acpica-component_src_prepare() {
+    echo "CWARNINGFLAGS =" \
+            >> generate/unix/Makefile.config
+    edo sed -e 's/\(CFLAGS\) +=/\1 = \$(MY_\1)/' \
+            -e 's/\(LDFLAGS\) +=/\1 = \$(MY_\1)/' \
+            -e 's/\(INSTALLFLAGS ?=.*\)-s\(.*\)/\1\2/' \
+            -i generate/unix/Makefile.config
+    edo sed -e 's/ -Werror//g' \
+            -i generate/unix/iasl/Makefile
+}
+
+acpica-component_src_compile() {
+    CFLAGS= LDFLAGS= emake \
+        CC="${CC}" \
+        MY_CFLAGS="${CFLAGS}" \
+        MY_LDFLAGS="${LDFLAGS}" \
+        ${PN}
+}
+
+acpica-component_src_install() {
+    emake \
+        PROGS=${PN} \
+        INSTALLDIR="${IMAGE}"/usr/bin \
+        install
+
+    dodoc documents/changes.txt
+}
+

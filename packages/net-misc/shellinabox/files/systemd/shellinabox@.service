@@ -1,0 +1,11 @@
+# nckx
+
+[Unit]
+Description=Shell in a Box on port %I
+
+[Service]
+ExecStart=/usr/bin/shellinaboxd --port=%I --cert=/etc/shellinabox/cert --disable-ssl-menu --linkify=aggressive --no-beep
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+# Copyright 2014 Tobias Geerinckx-Rice (nckx) <tobias.geerinckx.rice@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+require github [ user=drotiro pn=boxfs2 ] boxfs
+
+PLATFORMS="~amd64"
+

@@ -1,0 +1,13 @@
+pad=
+for i in $( seq 1 40 ); do
+	pad+=" "
+done
+
+cd packages
+for i in */*
+do
+	echo -n "${i}${pad:${#i}}"
+	[[ -r "${i}/TAGS" ]] &&
+		echo $( sort < "${i}/TAGS" ) ||
+		echo "-"
+done

@@ -1,0 +1,39 @@
+# Copyright 2014 Tobias Geerinckx-Rice (nckx) <tobias.geerinckx.rice@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+#BUGS_TO="https://github.com/nckx/exherbo-repository-nckx/issues"
+
+SUMMARY="FUSE-based box.com file system"
+DESCRIPTION="
+Boxfs uses version 2 of the box.com API (see http://developers.box.com/docs/)
+to store files in the cloud.
+"
+HOMEPAGE="https://github.com/drotiro/boxfs2"
+LICENCES="GPL-3"
+SLOT="0"
+
+MYOPTIONS=""
+DEPENDENCIES="
+    build+run:
+        sys-fs/fuse
+        dev-libs/libxml2
+"
+
+# Always use GNU ld (gold fails, FIXME)
+LDFLAGS+=" -Wl,-fuse=bfd"
+
+export_exlib_phases src_compile src_install
+
+boxfs_src_compile() {
+    # FIXME this should probably use SCM_EXTRA. That would require patching
+    # the Makefile, because it insists on doing a 'git pull' nonetheless:
+    esandbox disable_net
+    unset CPPFLAGS CFLAGS # FIXME silently broken complaining about -fPIC
+    edo make static # emake fails
+}
+
+boxfs_src_install() {
+    dobin boxfs{,-init}
+    emagicdocs
+}
+

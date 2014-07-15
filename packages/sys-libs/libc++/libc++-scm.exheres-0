@@ -1,0 +1,35 @@
+# Copyright 2011 Elias Pipping <pipping@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="http://llvm.org/git/libcxx.git"
+
+require cmake scm-git
+
+SUMMARY="A new implementation of the C++ standard library, targeting C++0X"
+HOMEPAGE="http://libcxx.llvm.org/"
+
+LICENCES="|| ( MIT UoI-NCSA )"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-lang/clang
+    test:
+        dev-lang/llvm [[ note = [ For lit ] ]]
+"
+
+pkg_setup() {
+    # Won't work with g++
+    export CXX=clang++
+}
+
+src_prepare() {
+    edo sed -e "/\(ARCHIVE\|LIBRARY\) DESTINATION/s:lib:${LIBDIR}:" -i lib/CMakeLists.txt
+}
+
+src_test() {
+    cmake_run env LD_LIBRARY_PATH=lib llvm-lit --threads ${EXJOBS:-1} test
+}
+

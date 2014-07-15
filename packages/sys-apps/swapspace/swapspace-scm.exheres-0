@@ -1,0 +1,45 @@
+# Copyright 2014 Tobias Geerinckx-Rice <mr.nckx@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+SUMMARY="Dynamic Swap Manager"
+DESCRIPTION="
+This system daemon for the Linux kernel aims to do away with the need for large, fixed swap partitions or swap files. 
+
+When installing a Linux-based system (invariably GNU/Linux) with Swapspace, the usual swap partition can be omitted, or it can be kept quite small. Whenever Swapspace finds during normal system usage that more virtual memory is needed, it will automatically claim space from the hard disk. Conversely, swap space that is no longer needed is freed up again for regular use by the filesystem. 
+"
+HOMEPAGE="http://pqxx.org/development/swapspace/"
+SCM_REPOSITORY="svn://pqxx.org/swapspace/"
+require scm-svn systemd-service
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+    build+run:
+"
+
+#BUGS_TO="mr.nckx@gmail.com"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
+
+src_prepare() {
+    edo sed "s@strip @true @g" -i Makefile
+
+    default
+}
+
+DEFAULT_SRC_INSTALL_EXCLUDE=( etc/init.d )
+
+src_install() {
+    keepdir /var/lib/swapspace
+
+    default
+
+    install_systemd_files
+}
+

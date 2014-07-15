@@ -1,0 +1,17 @@
+# Copyright 2014 nckx <mr.nckx@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+require shellinabox
+DOWNLOADS=
+SCM_REPOSITORY="http://code.google.com/p/shellinabox/"
+require scm-git
+
+PLATFORMS="~amd64"
+
+src_prepare() {
+    shellinabox_src_prepare
+
+    # The Makefile gets VERY confused by some scm timestamps; reset them:
+    find -exec touch {} +
+}
+

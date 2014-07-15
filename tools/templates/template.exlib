@@ -1,0 +1,58 @@
+# Copyright 2013 Tobias Geerinckx-Rice (nckx) <mr.nckx@gmail.com>
+# Distributed under the terms of the GNU General Public License v3
+
+export_exlib_phases [src_...]
+
+SUMMARY=""
+DESCRIPTION="
+"
+HOMEPAGE=""
+
+if ever is_scm; then
+    SCM_REPOSITORY=""
+    SCM_BRANCH=""
+    require scm-git
+else
+    DOWNLOADS=""
+fi
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS="
+    option [[ description = [ ... ] ]]
+"
+
+DEPENDENCIES="
+    build:
+    build+run:
+        cat/pkg[>=2.6][option1][option2]
+    run:
+        option? ( cat/pkg )
+    suggestion:
+        cat/pkg [[ description = [ ... ] ]]
+    test:
+"
+
+#BUGS_TO="mr.nckx@gmail.com"
+
+[exlib name]_pkg_setup() {
+}
+
+[exlib name]_src_prepare() {
+    edo ./autogen.sh
+}
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( option )
+DEFAULT_SRC_CONFIGURE_PARAMS=( --parameter )
+[exlib name]_src_configure() {
+}
+
+[exlib name]_src_compile() {
+}
+
+[exlib name]_src_test() {
+}
+
+[exlib name]_src_install() {
+}
+
